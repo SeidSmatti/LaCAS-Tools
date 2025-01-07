@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Outils LaCAS - Links Fixer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .column {
+            flex-basis: 45%;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        input[type=text], textarea, button {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .column {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Outils LaCAS<br>Links Fixer</h1>
+    <label for="resourceSelector">Choisir le sous-domaine :</label>
+<select id="resourceSelector">
+    <option value="resource_339623745/resource_581270224.html">Catalogue de données filmiques</option>
+    <option value="resource_339623745/resource_1452499946.html">Données filmiques par domaine LaCAS</option>
+    <option value="resource_339623745/resource_1899899773.html">Données filmiques par contributeur</option>
+    <option value="resource_339623745/resource_2106291709.html">Données filmiques par équipe</option>
+    <option value="resource_339623745/resource_423737939.html">Données filmiques par genre</option>
+    <option value="resource_339623745/resource_284111308.html">Données filmiques segmentées</option>
+    <option value="resource_339623745/resource_993452978.html">Catalogue de données textuelles</option>
+    <option value="resource_339623745/resource_424908755.html">Données textuelles par domaines LaCAS</option>
+    <option value="resource_339623745/resource_2059795231.html">Catalogue de données visuelles</option>
+    <option value="resource_339623745/resource_1997248729.html">Données visuelles par domaines LaCAS</option>
+    <option value="resource_339623745/resource_2131813715.html">Données visuelles par contributeur</option>
+    <option value="resource_339623745/resource_2035243988.html">Données visuelles segmentées</option>
+    <option value="resource_339623745/resource_1645946863.html">Catalogue de données sonores</option>
+    <option value="resource_339623745/resource_1323357206.html">Données sonores par domaines LaCAS</option>
+    <option value="resource_339623745/resource_1723895388.html">Données sonores par contributeur</option>
+    <option value="resource_339623745/resource_1054931028.html">Aires géopolitiques, culturelles et linguistiques</option>
+    <option value="resource_339623745/resource_1788038459.html">Archives de chercheurs par nom</option>
+    <option value="resource_339623745/resource_1175764456.html">Archives de chercheurs par domaine de connaissance</option>
+    <option value="resource_339623745/resource_1521181540.html">Archives de chercheurs (toutes)</option>
+    <option value="resource_339623745/resource_1107492348.html">Evénements scientifiques par domaine de connaissance</option>
+    <option value="resource_339623745/resource_1781828438.html">Evénements scientifiques par type</option>
+    <option value="resource_339623745/resource_762867076.html">Evénements scientifiques (liste)</option>
+    <option value="resource_339623745/resource_1056343509.html">Archives de projets de recherche</option>
+    <option value="resource_339623745/resource_1375725231.html">Archives de manifestations culturelles</option>
+    <option value="resource_339623745/resource_987783233.html">Equipes de recherche</option>
+    <option value="resource_339623745/resource_1918249029.html">Équipes de recherche par domaine LaCAS</option>
+    <option value="resource_339623745/resource_261876734.html">Chercheur.e.s</option>
+    <option value="resource_339623745/resource_779143869.html">Chercheur.e.s par domaine LaCAS</option>
+    <option value="resource_339623745/resource_1827875405.html">Projets de recherche</option>
+    <option value="resource_339623745/resource_2021649194.html">Projets de recherche par équipe</option>
+    <option value="resource_339623745/resource_1071756781.html">Projets de recherche par domaine LaCAS</option>
+    <option value="resource_339623745/resource_1971884169.html">Thèmes de recherche</option>
+    <option value="resource_339623745/resource_1184363552.html">Thèmes de recherche par chercheur</option>
+    <option value="resource_339623745/resource_847325940.html">Thèmes de recherche par domaines LaCAS</option>
+    <option value="resource_339623745/resource_226459255.html">Disciplines scientifiques</option>
+    <option value="resource_339623745/resource_413316607.html">Études aréales</option>
+    <option value="resource_339623745/resource_1348641226.html">Courants et paradigmes scientifiques</option>
+    <option value="resource_339623745/resource_781110734.html">Science ouverte et humanités numériques</option>
+    <option value="resource_339623745/resource_1159492973.html">Problématiques méthodologiques et théoriques générales</option>
+    <option value="resource_339623745/resource_772481468.html">Philosophie</option>
+    <option value="resource_339623745/resource_1793956252.html">Références scientifiques - autorité</option>
+    <option value="resource_339623745/resource_1203448352.html">Références scientifiques - littérature</option>
+    <option value="resource_339623745/resource_806168801.html">Langues du monde</option>
+    <option value="resource_339623745/resource_1244173601.html">Groupes et familles de langues</option>
+    <option value="resource_339623745/resource_1208464078.html">Aires linguistiques</option>
+    <option value="resource_339623745/resource_419220481.html">Recherche sur les langues</option>
+    <option value="resource_339623745/resource_1706256646.html">Traduction et interprétation</option>
+    <option value="resource_339623745/resource_678582883.html">Traitement automatique des langues (TAL)</option>
+    <option value="resource_339623745/resource_95014208.html">Enseignement et apprentissage des langues</option>
+    <option value="resource_339623745/resource_332081663.html">Anthropologie</option>
+    <option value="resource_339623745/resource_873879240.html">Sociologie</option>
+    <option value="resource_339623745/resource_1904417704.html">Psychologie</option>
+    <option value="resource_339623745/resource_1045984468.html">Études sur le genre</option>
+    <option value="resource_339623745/resource_670356279.html">Sociétés du monde</option>
+    <option value="resource_339623745/resource_1426703525.html">Peuples, groupes sociaux, communautés</option>
+    <option value="resource_339623745/resource_525765919.html">Démographie, populations, migrations</option>
+    <option value="resource_339623745/resource_1717185515.html">Famille et parenté</option>
+    <option value="resource_339623745/resource_704495909.html">Réseaux et mouvements sociaux</option>
+    <option value="resource_339623745/resource_1861432581.html">Travail, emploi et métiers</option>
+    <option value="resource_339623745/resource_1317916303.html">Vie individuelle et sociale</option>
+    <option value="resource_339623745/resource_1581840877.html">Médecine et santé</option>
+    <option value="resource_339623745/resource_871320696.html">Corps humain; phénomènes physiologiques et psychiques</option>
+    <option value="resource_339623745/resource_1361663062.html">Bien-être individuel et social</option>
+    <option value="resource_339623745/resource_2106042146.html">Hygiène, cosmétiques</option>
+    <option value="resource_339623745/resource_607092102.html">Vêtements et accessoires</option>
+    <option value="resource_339623745/resource_165646449.html">Habitations et habitats</option>
+    <option value="resource_339623745/resource_937547730.html">Instruments, outils, équipements</option>
+    <option value="resource_339623745/resource_384441900.html">Alimentation et gastronomie</option>
+    <option value="resource_339623745/resource_430237722.html">Loisir, tourisme et sport</option>
+    <option value="resource_339623745/resource_2078753810.html">Croyances et cultes</option>
+    <option value="resource_339623745/resource_1052169773.html">Figures et personnalités religieuses</option>
+    <option value="resource_339623745/resource_592501626.html">Institutions et communautés religieuses</option>
+    <option value="resource_339623745/resource_1299530048.html">Pratiques religieuses et rituelles</option>
+    <option value="resource_339623745/resource_1576832056.html">Patrimoine immatériel religieux</option>
+    <option value="resource_339623745/resource_2043414630.html">Patrimoine matériel religieux</option>
+    <option value="resource_339623745/resource_2043414630.html">Patrimoine matériel religieux</option>
+    <option value="resource_339623745/resource_1333395078.html">Littératures</option>
+    <option value="resource_339623745/resource_1455009837.html">Art</option>
+    <option value="resource_339623745/resource_1701596667.html">Musique</option>
+    <option value="resource_339623745/resource_101411571.html">Arts du spectacle</option>
+    <option value="resource_339623745/resource_346385353.html">Cinéma et photographie</option>
+    <option value="resource_339623745/resource_1181995072.html">Architecture</option>
+    <option value="resource_339623745/resource_894831396.html">Arts appliqués</option>
+    <option value="resource_339623745/resource_2038110571.html">Edition</option>
+    <option value="resource_339623745/resource_1231501431.html">Bibliothèques, archives et musées</option>
+    <option value="resource_339623745/resource_1845665120.html">Auteurs, artistes, mouvements artistiques</option>
+    <option value="resource_339623745/resource_1977567612.html">Œuvres (d'art, de littérature, de cinéma, ...)</option>
+    <option value="resource_339623745/resource_127709491.html">Politique</option>
+    <option value="resource_339623745/resource_504500670.html">Relations internationales</option>
+    <option value="resource_339623745/resource_601283156.html">Sécurité nationale, régionale et globale</option>
+    <option value="resource_339623745/resource_1546882546.html">Économie</option>
+    <option value="resource_339623745/resource_1271706309.html">Finances</option>
+    <option value="resource_339623745/resource_1171265362.html">Droit</option>
+    <option value="resource_339623745/resource_1617107900.html">Institutions internationales</option>
+    <option value="resource_339623745/resource_1606128317.html">Communication et médias</option>
+    <option value="resource_339623745/resource_1152113197.html">Education</option>
+    <option value="resource_339623745/resource_1908345917.html">Milieux et phénomènes naturels</option>
+    <option value="resource_339623745/resource_407975236.html">Biodiversité et milieux naturels</option>
+    <option value="resource_339623745/resource_155290320.html">Matériaux, produits, substances</option>
+    <option value="resource_339623745/resource_828536222.html">Agriculture et agroécologie</option>
+    <option value="resource_339623745/resource_418431361.html">Industrie et artisanat</option>
+    <option value="resource_339623745/resource_1460117821.html">Commerce et services</option>
+    <option value="resource_339623745/resource_601988906.html">Ingénierie et infrastructures</option>
+    <option value="resource_339623745/resource_567200820.html">Développement durable</option>
+    <option value="resource_339623745/resource_1560605438.html">Histoire (historiographie)</option>
+    <option value="resource_339623745/resource_235377265.html">Préhistoire</option>
+    <option value="resource_339623745/resource_938366056.html">Archéologie</option>
+    <option value="resource_339623745/resource_1765781142.html">Ères et périodes géologiques</option>
+    <option value="resource_339623745/resource_262582870.html">Localisation chronologique</option>
+    <option value="resource_339623745/resource_1432955009.html">Époques historiques</option>
+    <option value="resource_339623745/resource_1631055533.html">Formations historiques</option>
+    <option value="resource_339623745/resource_700355809.html">Dynasties, lignées, familles</option>
+    <option value="resource_339623745/resource_149662472.html">Personnalités historiques, politiques, ...</option>
+    <option value="resource_339623745/resource_301027150.html">Événements et processus historiques</option>
+    <option value="resource_339623745/resource_618269300.html">Sites (historiques, archéologiques) et monuments</option>
+    <option value="resource_339623745/resource_653691709.html">Espèces éteintes, fossiles</option>
+    <option value="resource_339623745/resource_1591772741.html">Géographie</option>
+    <option value="resource_339623745/resource_1927415901.html">Espace urbain et urbanisme</option>
+    <option value="resource_339623745/resource_910307289.html">Régions (administratives, géopolitiques)</option>
+    <option value="resource_339623745/resource_1142811878.html">Pays contemporains</option>
+    <option value="resource_339623745/resource_103208234.html">Localités habitées</option>
+    <option value="resource_339623745/resource_1884778589.html">Entités urbaines et périurbaines</option>
+    <option value="resource_339623745/resource_608957692.html">Écozones (biomes)</option>
+    <option value="resource_339623745/resource_1678695993.html">Reliefs terrestres</option>
+    <option value="resource_339623745/resource_1918165306.html">Etendues et cours d'eau</option>
+    <option value="resource_339623745/resource_1688237912.html">Voies de communication, routes</option>
+    <option value="resource_339623745/resource_1535901230.html">Zones aréales</option>
+    <option value="resource_339623745/resource_661598524.html">Structures et objets célestes</option>
+</select>
+
+    <div class="container">
+        <div class="column">
+            <h2>Cas 1 : Entités FAIRisées </h2>
+            <label for="newCountry">Identifiant FAIR :</label>
+            <input type="text" id="newCountry" name="newCountry" placeholder="entite_exemple">
+            <br>
+            <label for="newCountryLabel">Libellé de l'entité à générer :</label>
+            <input type="text" id="newCountryLabel" name="newCountryLabel" placeholder="Libellé de l'entité">
+            <br>
+            <button onclick="generateQuery()">Générer la requête</button>
+            <textarea id="generatedQuery1"></textarea>
+            <button onclick="copyToClipboard('generatedQuery1')">Copier dans le presse-papiers</button>
+        </div>
+        <div class="column">
+            <h2>Cas 2 : Entiés non-FAIRisées</h2>
+            <label for="uriReplacement">Lien campus AAR complet :</label>
+            <input type="text" id="uriReplacement" name="uriReplacement" placeholder="http://nouvelle.uri/entite">
+            <br>
+            <label for="newEntityLabel2">Libellé de l'entité à générer :</label>
+            <input type="text" id="newEntityLabel2" name="newEntityLabel2" placeholder="Libellé de l'entité">
+            <br>
+            <button onclick="generateQueryWithReplacement()">Générer la requête</button>
+            <textarea id="generatedQuery2"></textarea>
+            <button onclick="copyToClipboard('generatedQuery2')">Copier dans le presse-papiers</button>
+        </div>
+    </div>
+
+    <script>
+function generateQuery() {
+    const newCountry = document.getElementById('newCountry').value.trim();
+    const newCountryLabel = document.getElementById('newCountryLabel').value.trim();
+    const resourcePath = document.getElementById('resourceSelector').value; // Récupère la valeur sélectionnée
+
+    const baseQuery = `SELECT DISTINCT ?s ?label_s (GROUP_CONCAT(DISTINCT ?subDescription;separator=" - ") AS ?description) ?thumbnail ?label_s_order (GROUP_CONCAT(DISTINCT ?contrib_label;separator=" ; ") AS ?contributorLabel) ?context_label ?duration (GROUP_CONCAT(DISTINCT ?targetPageUri;separator=";") AS ?targetPages) WHERE {OPTIONAL { GRAPH <http://lacas.inalco.fr/resource/${newCountry}> {{ <http://lacas.inalco.fr/resource/${newCountry}> <http://campus-aar.fr/asa#description> ?subDescription. } UNION { <http://lacas.inalco.fr/resource/${newCountry}> <http://purl.org/dc/elements/1.1/description> ?subDescription. } }} OPTIONAL { <http://lacas.inalco.fr/resource/${newCountry}> <http://www.ina.fr/core#thumbnailUrl> ?thumbnail} OPTIONAL { GRAPH <http://lacas.inalco.fr/resource/${newCountry}> { <http://lacas.inalco.fr/resource/${newCountry}> <http://www.ina.fr/core#contributor> ?contrib_label. }} BIND(<http://lacas.inalco.fr/resource/${newCountry}> AS ?s) BIND(str("${newCountryLabel}") AS ?label_s) BIND(str("https://lacas.inalco.fr/portals/html/${resourcePath}?uri=http%3A%2F%2Flacas.inalco.fr%2Fresource%2F${newCountry}") AS ?targetPageUri) FILTER (lang(?subDescription) = 'fr' || lang(?subDescription) = "") }`;
+
+    document.getElementById('generatedQuery1').value = `https://lacas.inalco.fr/portals/api/saphir/sparql_search?query=${encodeURIComponent(baseQuery)}`;
+}
+
+
+function generateQueryWithReplacement() {
+    const uriReplacement = document.getElementById('uriReplacement').value.trim();
+    const newEntityLabel = document.getElementById('newEntityLabel2').value.trim();
+    const resourcePath = document.getElementById('resourceSelector').value; // Récupère la valeur sélectionnée du même sélecteur de ressource
+
+    // Vérifie si uriReplacement commence déjà par http:// ou https://
+    const uriScheme = uriReplacement.startsWith('http://') || uriReplacement.startsWith('https://') ? '' : 'http://';
+
+    let baseQuery = `SELECT DISTINCT ?s ?label_s (GROUP_CONCAT(DISTINCT ?subDescription;separator=" - ") AS ?description) ?thumbnail ?label_s_order (GROUP_CONCAT(DISTINCT ?contrib_label;separator=" ; ") AS ?contributorLabel) ?context_label ?duration (GROUP_CONCAT(DISTINCT ?targetPageUri;separator=";") AS ?targetPages) WHERE {OPTIONAL { GRAPH <${uriReplacement}> {{ <${uriReplacement}> <http://campus-aar.fr/asa#description> ?subDescription. } UNION { <${uriReplacement}> <http://purl.org/dc/elements/1.1/description> ?subDescription. } }} OPTIONAL { <${uriReplacement}> <http://www.ina.fr/core#thumbnailUrl> ?thumbnail} OPTIONAL { GRAPH <${uriReplacement}> { <${uriReplacement}> <http://www.ina.fr/core#contributor> ?contrib_label. }} BIND(<${uriReplacement}> AS ?s) BIND(str("${newEntityLabel}") AS ?label_s) BIND(str("https://lacas.inalco.fr/portals/html/${resourcePath}?uri=${uriScheme}${uriReplacement}") AS ?targetPageUri) FILTER (lang(?subDescription) = 'fr' || lang(?subDescription) = "") }`;
+
+    document.getElementById('generatedQuery2').value = `https://lacas.inalco.fr/portals/api/saphir/sparql_search?query=${encodeURIComponent(baseQuery)}`;
+}
+
+
+
+        function copyToClipboard(outputId) {
+            const textArea = document.getElementById(outputId);
+            textArea.select();
+            document.execCommand('copy');
+        }
+    </script>
+</body>
+</html>
+

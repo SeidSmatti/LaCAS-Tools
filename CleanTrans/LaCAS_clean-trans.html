@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>LaCAS Clean/Trans</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+
+        input[type="file"], textarea, button, select {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>LaCAS Clean/Trans</h1>
+    <div class="container">
+        <select id="fileType">
+            <option value="json">JSON</option>
+            <option value="trig">TRIG</option>
+        </select>
+        <button id="loadFile">Charger Fichier</button>
+        <button id="showCleanedText">Afficher Texte Nettoyé</button>
+        <div>
+            <textarea id="cleanedText" rows="10"></textarea>
+        </div>
+        <button id="saveFileModifications">Sauvegarder Modifications dans Fichier</button>
+        <button id="saveCleanedText">Enregistrer Texte Nettoyé en TXT</button>
+    </div>
+
+    <script>
+        let originalOrder = [];
+        let sortedOrder = [];
+
+        function extractSegments(content) {
+            let segments = [];
+            let regex = /(whisper:segment_\d+_\d+)\s*{\s*([^}]*)\s*core:text\s*"([^"]*)"\s*.\s*}/g;
+            let match;
+            while ((match = regex.exec(content)) !== null) {
+                segments.push({ fullSegment: match[0], segmentId: match[1], segmentBody: match[2], text: match[3].trim() });
+            }
+            return segments;
+        }
+
+        function sortSegments(segments) {
+            return segments.sort((a, b) => {
+                let [aNum1, aNum2] = a.segmentId.match(/whisper:segment_(\d+)_(\d+)/).slice(1).map(Number);
+                let [bNum1, bNum2] = b.segmentId.match(/whisper:segment_(\d+)_(\d+)/).slice(1).map(Number);
+                if (aNum1 !== bNum1) return aNum1 - bNum1;
+                return aNum2 - bNum2;
+            });
+        }
+
+        function replaceSegments(content, sortedOrder) {
+            let modifiedContent = content;
+            sortedOrder.forEach(item => {
+                let regex = new RegExp(`(${item.segmentId}\\s*{\\s*[^}]*core:text\\s*")[^"]*(")`, 'g');
+                modifiedContent = modifiedContent.replace(regex, `$1${item.text}$2`);
+            });
+            return modifiedContent;
+        }
+
+        document.getElementById('loadFile').addEventListener('click', function() {
+            let input = document.createElement('input');
+            input.type = 'file';
+            input.accept = document.getElementById('fileType').value === 'json' ? '.json' : '.trig';
+            input.onchange = e => {
+                let file = e.target.files[0];
+
+                let reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+
+                reader.onload = readerEvent => {
+                    var content = readerEvent.target.result;
+                    window.localStorage.setItem('uploadedFile', content);
+                    window.localStorage.setItem('fileType', document.getElementById('fileType').value);
+                    alert('Fichier chargé avec succès. Utilisez "Afficher Texte Nettoyé" pour le traiter.');
+                }
+            }
+            input.click();
+        });
+
+        document.getElementById('showCleanedText').addEventListener('click', function() {
+            let fileType = window.localStorage.getItem('fileType');
+            let content = window.localStorage.getItem('uploadedFile');
+            let cleanedText;
+
+            if (fileType === 'json') {
+                let jsonContent = JSON.parse(content);
+                cleanedText = jsonContent.map(element => element.text ? element.text.trim() + "\n\n" : "").join('');
+            } else if (fileType === 'trig') {
+                let segments = extractSegments(content);
+                originalOrder = [...segments];  // Preserve original order
+                sortedOrder = sortSegments([...segments]);  // Sort segments
+
+                cleanedText = sortedOrder.map(item => item.text).join("\n\n");
+            }
+
+            document.getElementById('cleanedText').value = cleanedText;
+        });
+
+        document.getElementById('saveFileModifications').addEventListener('click', function() {
+            let modifiedText = document.getElementById('cleanedText').value.split('\n\n');
+            let fileType = window.localStorage.getItem('fileType');
+            let content = window.localStorage.getItem('uploadedFile');
+            let modifiedContent;
+
+            if (fileType === 'json') {
+                let jsonContent = JSON.parse(content);
+                if (modifiedText.length < jsonContent.length) {
+                    alert('Attention: Le nombre de lignes modifiées ne correspond pas à celui du fichier original. Les lignes manquantes seront remplies avec le texte original.');
+                    modifiedText = modifiedText.concat(jsonContent.slice(modifiedText.length).map(element => element.text));
+                }
+                modifiedContent = jsonContent.map((element, index) => {
+                    if (modifiedText[index]) element.text = modifiedText[index];
+                    return element;
+                });
+                modifiedContent = JSON.stringify(modifiedContent, null, 4);
+            } else if (fileType === 'trig') {
+                if (modifiedText.length < sortedOrder.length) {
+                    alert('Attention: Le nombre de lignes modifiées ne correspond pas à celui du fichier original. Les lignes manquantes seront remplies avec le texte original.');
+                    modifiedText = modifiedText.concat(sortedOrder.slice(modifiedText.length).map(item => item.text));
+                }
+
+                let index = 0;
+                sortedOrder.forEach(item => {
+                    item.text = modifiedText[index++] || item.text;
+                });
+
+                modifiedContent = replaceSegments(content, sortedOrder);
+            }
+
+            let dataStr = "data:text/" + (fileType === 'json' ? 'json' : 'plain') + ";charset=utf-8," + encodeURIComponent(modifiedContent);
+            let dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", fileType === 'json' ? "scene.json" : "scene.trig");
+            dlAnchorElem.click();
+        });
+
+        document.getElementById('saveCleanedText').addEventListener('click', function() {
+            let text = document.getElementById('cleanedText').value;
+            let dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(text);
+            let dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "texte_nettoye.txt");
+            dlAnchorElem.click();
+        });
+    </script>
+</body>
+</html>

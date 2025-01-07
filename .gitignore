@@ -1,0 +1,42 @@
+# Python specific
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+.venv
+venv/
+build/
+dist/
+*.egg-info/
+*.egg
+*.sqlite3
+*.log
+*.pot
+*.mo
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# HTML/CSS specific (if using preprocessors)
+*.sass-cache/
+*.scss-cache/
+*.map
+
+# General node_modules (if any Node.js tools are used for HTML/CSS projects)
+node_modules/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

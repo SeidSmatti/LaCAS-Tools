@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaCAS ✨SPARQL✨</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5; /* Couleur de fond claire */
+        }
+
+        .container {
+            /* Conteneur central pour structurer les éléments */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            justify-content: space-around;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
+            margin: 10px;
+        }
+
+        /* Styles des champs de formulaire et boutons */
+        input[type=text], textarea, button {
+            width: calc(100% - 24px); /* Ajuste la largeur à l'intérieur du conteneur */
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50; /* Couleur de fond verte */
+            color: white; /* Texte blanc */
+            border: none;
+            cursor: pointer; /* Curseur interactif */
+        }
+
+        h1 {
+            text-align: center; /* Titre centré */
+        }
+    </style>
+
+    <!-- Script pour gérer les interactions et la génération de requêtes SPARQL -->
+    <script>
+        // Génère une requête SPARQL en fonction des paramètres sélectionnés
+        function generateSPARQL() {
+            const uri = document.getElementById("uri-input").value; // Récupère l'URI saisie
+            const params = document.querySelectorAll('input[type="checkbox"]:not(.lang-check)'); // Paramètres généraux
+            const langParams = document.querySelectorAll('input[type="checkbox"].lang-check'); // Paramètres linguistiques
+
+            let countCheckedParams = 0; // Compteur pour les paramètres cochés
+
+            // Compte le nombre de paramètres cochés
+            params.forEach((param) => {
+                if (param.checked) countCheckedParams++;
+            });
+            langParams.forEach((param) => {
+                if (param.checked) countCheckedParams++;
+            });
+
+            let query;
+            if (countCheckedParams === 1) {
+                // Génère une requête simplifiée si un seul paramètre est coché
+                params.forEach((param) => {
+                    if (param.checked) {
+                        query = `SELECT <${param.value}> AS ?property ?content WHERE { <${uri}> <${param.value}> ?content . }`;
+                    }
+                });
+                langParams.forEach((param) => {
+                    if (param.checked) {
+                        query = `SELECT <${param.getAttribute("data-param-uri")}> AS ?property ?content WHERE { <${uri}> <${param.getAttribute("data-param-uri")}> ?content .
+                            FILTER(LANG(?content) = "fr") }`;
+                    }
+                });
+            } else {
+                // Génère une requête SPARQL complète avec des UNIONs
+                query = `SELECT ?property ?content WHERE {`;
+                params.forEach((param) => {
+                    if (param.checked) {
+                        if (query.includes("BIND(")) query += " UNION";
+                        query += ` { <${uri}> <${param.value}> ?content .
+                            BIND(<${param.value}> AS ?property) }`;
+                    }
+                });
+                langParams.forEach((param) => {
+                    if (param.checked) {
+                        if (query.includes("BIND(")) query += " UNION";
+                        query += ` { <${uri}> <${param.getAttribute("data-param-uri")}> ?content .
+                            FILTER(LANG(?content) = "fr")  
+                            BIND(<${param.getAttribute("data-param-uri")}> AS ?property) }`;
+                    }
+                });
+                query += " }";
+            }
+
+            // Affiche la requête générée
+            document.getElementById("sparql-output").value = query;
+        }
+
+        // Encode la requête SPARQL pour l'exécution via un endpoint
+        function encryptQuery() {
+            const query = document.getElementById("sparql-output").value;
+            const encodedQuery = encodeURIComponent(query); // Encode la requête pour une URL
+            const endpoint = `https://lacas.inalco.fr/portals/api/saphir/sparql_search?query=${encodedQuery}`;
+            document.getElementById("encrypted-output").value = endpoint; // Affiche l'URL encodée
+        }
+
+        // Ouvre la requête encodée dans un nouvel onglet
+        function runQuery() {
+            const endpoint = document.getElementById("encrypted-output").value;
+            window.open(endpoint, '_blank'); // Lance la requête dans un nouvel onglet
+        }
+
+        // Active/Désactive toutes les options "français" simultanément
+        function toggleFrenchOptions() {
+            const frenchOptions = document.querySelectorAll('.lang-check');
+            const allChecked = Array.from(frenchOptions).every(checkbox => checkbox.checked); // Vérifie si tous sont cochés
+            frenchOptions.forEach(checkbox => checkbox.checked = !allChecked); // Inverse l'état
+        }
+    </script>
+</head>
+<body>
+    <h1>LaCAS ✨SPARQL✨</h1>
+
+    <!-- Champ pour saisir une URI -->
+    <div>
+        <label for="uri-input">Entrer URI : Lien Campus AAR, Identifiant FAIR, ... (lien complet)</label>
+        <input type="text" id="uri-input" placeholder="Enter URI">
+    </div>
+
+    <!-- Sélection des paramètres SPARQL -->
+    <div>
+        <h3>Select Parameters:</h3>
+        <div id="parameters">
+            <!-- Liste de cases à cocher pour sélectionner des propriétés -->
+            <div>
+                <!-- Chaque paramètre possède une option de filtrage par langue (français) -->
+                <input type="checkbox" id="description" value="http://campus-aar.fr/asa#description"><label for="description">asa#description</label>
+                <input type="checkbox" class="lang-check" data-param-uri="http://campus-aar.fr/asa#description"><label>fr</label><br>
+
+                <!-- D'autres propriétés similaires -->
+                <!-- Répétition du même modèle pour d'autres paramètres (asa#locution, asa#publicName, etc.) -->
+                <!-- Certains paramètres n'ont pas d'option "français" -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Boutons pour générer, crypter et exécuter la requête -->
+    <button onclick="toggleFrenchOptions()">Cocher/Décocher toutes les cases "fr"</button>
+    <button onclick="generateSPARQL()">Générer la requête SPARQL</button>
+    <textarea id="sparql-output" rows="10" cols="80"></textarea>
+    <button onclick="encryptQuery()">Crypter</button>
+    <textarea id="encrypted-output" rows="4" cols="80"></textarea>
+    <button onclick="runQuery()">Exécuter</button>
+</body>
+</html>
+
