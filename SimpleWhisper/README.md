@@ -23,7 +23,7 @@ La bibliothèque faster-whisper, développée par SYSTRAN, propose un système d
 ### Prérequis
 
 - Python 3.7 ou supérieur
-- `ffmpeg` installé et disponible dans le chemin système.
+- `ffmpeg` installé et disponible dans le PATH.
 - `tkinter` installé.
 - Pour l'accélération GPU (facultatif), assurez-vous que CUDA est installé. Consultez le [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit) pour les instructions d'installation.
 
