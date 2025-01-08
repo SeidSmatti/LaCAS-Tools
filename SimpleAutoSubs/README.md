@@ -1,97 +1,90 @@
+# SimpleAutoSubs (Version Archivée)
 
-# SimpleAutoSubs
+SimpleAutoSubs est un outil permettant de transcrire et d’intégrer des sous-titres dans des vidéos en utilisant [Faster Whisper](https://github.com/SYSTRAN/faster-whisper) et [FFmpeg](https://ffmpeg.org/). Cet outil offre une interface graphique (GUI) simple d’utilisation pour transcrire des vidéos et y intégrer les sous-titres de manière transparente.
 
-SimpleAutoSubs is a tool for transcribing and embedding subtitles into videos using [Faster Whisper](https://github.com/SYSTRAN/faster-whisper) and [FFmpeg](https://ffmpeg.org/). The tool offers an easy-to-use GUI to transcribe videos seamlessly embed the transcription as subtitles.
+**À noter :** Cette version de SimpleAutoSubs est archivée. La version en cours de développement est disponible ici : [SeidSmatti/SimpleAutoSubs](https://github.com/SeidSmatti/SimpleAutoSubs).
 
-SimpleAutoSubs was developed as part of the [LaCAS Project](https://lacas.inalco.fr/le-projet-lacas) for [INALCO](https://www.inalco.fr/) (Institut National des Langues et Civilisations Orientales).
+SimpleAutoSubs a été développé dans le cadre du [Projet LaCAS](https://lacas.inalco.fr/le-projet-lacas) pour [l'INALCO](https://www.inalco.fr/) (Institut National des Langues et Civilisations Orientales).
 
-## Features
+## Fonctionnalités
 
-- Handles .mp4, .mkv, and .avi inputs. 
-- Generate and embed subtitles into video files
-- GPU acceleration support
+- Prend en charge les fichiers .mp4, .mkv et .avi.
+- Génère et intègre des sous-titres dans les fichiers vidéo.
+- Supporte l’accélération GPU.
 
 ## Installation
 
-### Prerequisites
+### Prérequis
 
-- Python 3.6 or higher
+- Python 3.7 ou version ultérieure
 - FFmpeg
-- CUDA Toolkit (If you want GPU acceleration), Note : as of now, faster-whisper only supports CUDA 11.x. 
+- CUDA Toolkit (pour l’accélération GPU) 
+  - **Remarque :** Actuellement, Faster Whisper ne supporte que CUDA 11.x.
 
-Check [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit) for installation instructions.
+Consultez les instructions d'installation ici : [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit).
 
+[Tutoriels d'installation de FFMPEG](https://gist.github.com/barbietunnie/47a3de3de3274956617ce092a3bc03a1)
 
-[FFMPEG installation tutorials](https://gist.github.com/barbietunnie/47a3de3de3274956617ce092a3bc03a1) 
+### Étapes
 
-### Steps
-
-1. Clone the repository:
+1. Clonez le dépôt :
     ```sh
     git clone https://github.com/SeidSmatti/SimpleAutoSubs.git
     cd SimpleAutoSubs
     ```
 
-2. Create a virtual environment and activate it (optional but recommended):
+2. Créez un environnement virtuel et activez-le (optionnel mais recommandé) :
     ```sh
     python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate  # Sur Windows, utilisez `venv\Scripts\activate`
     ```
 
-3. Install the required packages:
+3. Installez les dépendances requises :
     ```sh
     pip install -r requirements.txt
     ```
 
-4. Install tkinter
-   
-   For Mac OS
-   ```sh
-   brew install python-tk
-   ```
+4. Installez tkinter :
 
-   For Linux (Debian based)
-   ```
-   sudo apt-get install python3-tk
-   ```
+   - **Pour macOS** :
+     ```sh
+     brew install python-tk
+     ```
 
-   For Windows
+   - **Pour Linux (Debian et dérivés)** :
+     ```sh
+     sudo apt-get install python3-tk
+     ```
 
-   Usually comes pre-installed with Python, if not see the [official documentation](https://tkdocs.com/tutorial/install.html)
-   
-## Usage
+   - **Pour Windows** :
+     Tkinter est habituellement préinstallé avec Python. Sinon, consultez la [documentation officielle](https://tkdocs.com/tutorial/install.html).
 
-Run the main script:
+## Utilisation
+
+Exécutez le script principal :
 ```sh
 python main.py
 ```
 
-### GUI Overview
+### Aperçu de l'interface graphique
 
-1. **Input File**: Browse and select the video file you want to transcribe. (If the file format is not supported, you can ```ffmpeg -i sourcefile.ext newfile.mp4```)
-2. **Output File**: Browse and select the location to save the final video with embedded subtitles.
-3. **Model Size**: Choose the size of the Whisper model.
-4. **Use GPU**: Check this box if you want to use GPU acceleration.
-5. **Include timecodes** : Always check the box except if you only want to use the program to get a clean transcription. (For such cases I recommend [SimpleWhisper](https://github.com/SeidSmatti/SimpleWhisper).
-6. **Start Transcription**: Click this button to start the transcription process. (You can correct the eventual mistakes in the textbox before embedding)
-7. **Embed Subtitles**: Click this button to embed the generated subtitles into the video.
+1. **Fichier d'entrée** : Sélectionnez le fichier vidéo à transcrire. (Si le format n’est pas supporté, utilisez `ffmpeg -i sourcefile.ext newfile.mp4`.)
+2. **Fichier de sortie** : Sélectionnez l’emplacement pour enregistrer la vidéo finale avec sous-titres.
+3. **Taille du modèle** : Choisissez la taille du modèle Whisper.
+4. **Utiliser le GPU** : Activez cette option pour l’accélération GPU.
+5. **Inclure les codes temporels** : Cochez cette case, sauf si vous souhaitez uniquement une transcription propre sans sous-titres. (Dans ce cas, nous recommandons [SimpleWhisper](https://github.com/SeidSmatti/SimpleWhisper).)
+6. **Démarrer la transcription** : Cliquez sur ce bouton pour lancer le processus de transcription. (Vous pouvez corriger les erreurs dans la zone de texte avant d’intégrer les sous-titres.)
+7. **Intégrer les sous-titres** : Cliquez sur ce bouton pour intégrer les sous-titres générés dans la vidéo.
 
+## Ressources supplémentaires
 
-### Logs
-
-The log box at the bottom of the GUI displays the progress and any messages or errors that occur during the process.
-
-## More Resources
-
-For more information on Whisper, faster-whisper, and CUDA:
+Pour plus d’informations sur Whisper, Faster Whisper et CUDA :
 - [Open-AI Whisper](https://github.com/openai/whisper)
 - [Faster Whisper](https://github.com/SYSTRAN/faster-whisper)
 - [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
 
-## Additions 
-- 22/07/2024 : Added manual language selection.
 
-## License
+## Licence
 
-This project is licensed under the GNU General Public License. See the [LICENSE](LICENSE) file for details.
+Ce projet est sous licence GNU General Public License. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
 

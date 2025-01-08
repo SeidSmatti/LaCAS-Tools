@@ -1,8 +1,7 @@
 # Outils LaCAS - Links fixer
 
 ## Aperçu
-
-Outils LaCAS - Links fixer Correcteur de Liens est un outil basé sur le web conçu pour aider les utilisateurs à générer et gérer des requêtes SPARQL pour des entités FAIRisées et non-FAIRisées au sein de la base de données LaCAS (Laboratoire de cultures et archives scientifiques). Cet utilitaire vise principalement à faciliter le processus de requête, récupération et affichage d'informations détaillées sur diverses ressources scientifiques et culturelles cataloguées par LaCAS.
+Links fixer est outil interne permettant d'obtenir les URI d'entités issues de LaCAS Data afin de les intégrer à LaCAS Publications.
 
 ## Fonctionnalités
 
