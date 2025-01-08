@@ -1,114 +1,110 @@
-# SimpleWhisper
+# SimpleWhisper (Version Archivée)
 
-A user-friendly transcription tool using the [faster-whisper](https://github.com/SYSTRAN/faster-whisper) library, optimizing [Whisper](https://github.com/openai/whisper) models performance for CPU and GPU transcribing.
+Un outil de transcription facile à manier utilisant la bibliothèque [faster-whisper](https://github.com/SYSTRAN/faster-whisper), optimisant les performances des modèles [Whisper](https://github.com/openai/whisper) pour la transcription sur CPU et GPU.
 
-SimpleWhisper was developed as part of the [LaCAS Project](https://lacas.inalco.fr/le-projet-lacas) for [INALCO](https://www.inalco.fr/) (Institut National des Langues et Civilisations Orientales).
+**À noter :** Cette version de SimpleWhisper est archivée. La version en cours de développement est disponible à l'adresse suivante : [https://github.com/SeidSmatti/SimpleWhisper](https://github.com/SeidSmatti/SimpleWhisper).
 
+SimpleWhisper a été développé dans le cadre du [Projet LaCAS](https://lacas.inalco.fr/le-projet-lacas) pour [l'INALCO](https://www.inalco.fr/) (Institut National des Langues et Civilisations Orientales).
 
-## Method and Results
+## Méthode et Résultats
 
-### Method
+### Méthode
 
-The faster-whisper library, developed by SYSTRAN, offers an optimized and efficient automatic speech recognition (ASR) system. Despite its powerful capabilities, Whisper requires command-line interactions and technical setup, which can be a barrier for many users. SimpleWhisper addresses this by providing a graphical user interface (GUI) that abstracts the complexity of the Whisper model, allowing users to easily transcribe audio or video files.
+La bibliothèque faster-whisper, développée par SYSTRAN, propose un système de reconnaissance automatique de la parole (ASR) optimisé et efficace. Bien que Whisper offre des capacités puissantes, son utilisation via la ligne de commande et sa configuration technique peuvent constituer une barrière pour de nombreux utilisateurs. SimpleWhisper résout ce problème en fournissant une interface graphique (GUI) qui simplifie l'utilisation du modèle Whisper, permettant aux utilisateurs de transcrire facilement des fichiers audio ou vidéo.
 
-**Key features:**
-- **Model Loading:** Load different sizes of Whisper models based on user requirements.
-- **Audio Conversion:** Convert video files to audio format using `ffmpeg`.
-- **Transcription:** Transcribe audio files with or without timecodes.
-- **GPU Acceleration:** Utilize CUDA for GPU acceleration to speed up transcription (if available).
+**Caractéristiques principales :**
+- **Chargement des modèles :** Possibilité de charger différents modèles Whisper selon les besoins.
+- **Conversion audio :** Conversion des fichiers vidéo en format audio avec `ffmpeg`.
+- **Transcription :** Transcription des fichiers audio avec ou sans codes temporels.
+- **Accélération GPU :** Utilisation de CUDA pour accélérer la transcription si un GPU est disponible.
 
+## Instructions d'exécution
 
-## Running Instructions
+### Prérequis
 
-To run SimpleWhisper, follow these steps:
+- Python 3.7 ou supérieur
+- `ffmpeg` installé et disponible dans le chemin système.
+- `tkinter` installé.
+- Pour l'accélération GPU (facultatif), assurez-vous que CUDA est installé. Consultez le [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit) pour les instructions d'installation.
 
-### Prerequisites
-
-- Python 3.7 or higher
-- `ffmpeg` installed and available in the system path.
--  `tkinter` installed.
-- For GPU acceleration (optional), ensure you have CUDA installed. Check [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit) for installation instructions.
-
-
-[FFMPEG installation tutorials](https://gist.github.com/barbietunnie/47a3de3de3274956617ce092a3bc03a1) 
+[Tutoriels d'installation de FFMPEG](https://gist.github.com/barbietunnie/47a3de3de3274956617ce092a3bc03a1) 
 
 ### Installation
 
-1. Clone the repository:
+1. Clonez le dépôt :
     ```sh
     git clone https://github.com/SeidSmatti/SimpleWhisper.git
     cd SimpleWhisper
     ```
 
-2. Create a virtual environment(optional):
+2. Créez un environnement virtuel (facultatif) :
     ```sh
     python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate  # Sur Windows : `venv\Scripts\activate`
     ```
 
-3. Install the dependencies:
+3. Installez les dépendances :
     ```sh
     pip install -r requirements.txt
     ```
-4. Install tkinter
-   
-   For Mac OS
+4. Installez tkinter
+
+   Pour Mac OS
    ```sh
    brew install python-tk
    ```
 
-   For Linux (Debian based)
-   ```
+   Pour Linux (basé sur Debian)
+   ```sh
    sudo apt-get install python3-tk
    ```
 
-   For Windows
+   Pour Windows
 
-   Usually comes pre-installed with Python, if not see the [official documentation](https://tkdocs.com/tutorial/install.html)
-    
+   Normalement préinstallé avec Python. Sinon, consultez la [documentation officielle](https://tkdocs.com/tutorial/install.html).
 
+**Remarque :** Pour Windows, vous pouvez directement télécharger le binaire (non signé pour l'instant) depuis la page [Releases](https://github.com/SeidSmatti/SimpleWhisper/releases).
 
-** NOTE : For Windows, you can directly download the (so far unsigned) binary from the [Releases](https://github.com/SeidSmatti/SimpleWhisper/releases).**
-### Usage
+### Utilisation
 
-1. Run the application:
+1. Lancez l'application :
     ```sh
     python src/main.py
     ```
 
-2. Alternatively, install the package and use the entry point:
+2. Sinon, installez le package et utilisez le point d'entrée :
     ```sh
     pip install .
     simplewhisper
     ```
 
-### Features
+### Fonctionnalités
 
-- Loading video or audio formats (with automatic conversion).
-- Basic output formating choice.
-- A choice between running the model on CPU or GPU.
+- Chargement des fichiers audio ou vidéo (avec conversion automatique).
+- Choix de la mise en forme de la sortie.
+- Possibilité de choisir entre l'utilisation du modèle sur CPU ou GPU.
 
+### Tests
 
-### Running Tests
-
-Run the unit tests to ensure everything is working correctly:
+Exécutez les tests unitaires pour vérifier que tout fonctionne correctement :
 ```sh
 python -m unittest discover -s tests
 ```
 
-## More Resources
+## Ressources Supplémentaires
 
-For more information on Whisper, faster-whisper, and CUDA:
+Pour plus d'informations sur Whisper, faster-whisper et CUDA :
 - [Open-AI Whisper](https://github.com/openai/whisper)
 - [Faster Whisper](https://github.com/SYSTRAN/faster-whisper)
 - [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
 
 ## Additions 
-- 22/07/2024 : Added manual language selection.
-- 17/09/2024 : Model caching for faster loading, responsive GUI with improved threading, safe temporary file handling, enhanced error handling, code refactoring (modularization and readability), unified language handling, and performance optimization based on device selection.
+- **22/07/2024 :** Ajout de la sélection manuelle de la langue.
+- **17/09/2024 :** Mise en cache des modèles pour un chargement plus rapide, interface graphique réactive avec gestion améliorée des threads, gestion sécurisée des fichiers temporaires, meilleure gestion des erreurs, refactorisation du code (modularisation et lisibilité), unification de la gestion des langues et optimisation des performances selon la configuration de l'appareil.
 
-## About
+## À propos
 
-SimpleWhisper was initially developed as part of the LaCAS Project for INALCO (Institut National des Langues et Civilisations Orientales). The project aims to make advanced transcription technology accessible to a broader audience. 
+SimpleWhisper a été initialement développé dans le cadre du projet LaCAS pour l'INALCO (Institut National des Langues et Civilisations Orientales). Le projet vise à rendre les technologies avancées de transcription accessibles à un public plus large.
 
-This project is part of the collaborative efforts within the LaCAS team to advance areal studies through innovative technological solutions.
+Ce projet fait partie des efforts collaboratifs de l'équipe LaCAS pour faire progresser les études aréales à travers des solutions technologiques innovantes.
+
